@@ -1,0 +1,10 @@
+{
+  "name": "tech-guide",
+  "displayName": "TechGuide - 技术学习私教",
+  "description": "跨平台的技术学习工作流：输入一门技术主题（如爬虫、自动化脚本），通过概念讲解、动手练习和结构化笔记，帮助你真正掌握并运用它。",
+  "triggerKeywords": ["学习技术", "掌握技术", "想学", "技术导读", "技能私教", "learn a technology", "tech guide"],
+  "version": "0.1.0",
+  "instructions": "instructions.md",
+  "author": "TechGuide",
+  "categories": ["learning", "education"]
+}
