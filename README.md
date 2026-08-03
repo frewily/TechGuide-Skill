@@ -39,3 +39,7 @@ bash tests/check-content.sh
 ```
 
 内容回归测试：断言 `instructions.md` 的教学规则约束（练习主线、用户先写、证据纪律）、模板章节要求、`init-notes.sh` 行为（创建 5 份笔记、无占位符残留、二次运行不覆盖、拒绝非法主题名）。
+
+## 开源协议
+
+[MIT License](./LICENSE)。Copyright (c) 2026 frewily
