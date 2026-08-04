@@ -37,6 +37,8 @@ assert "instructions.md 练习记录分散到各领域章节末尾" \
   grep -q "分散到各领域章节末尾" "$root/instructions.md"
 assert "instructions.md 规定中断恢复流程" \
   grep -q "学习恢复" "$root/instructions.md"
+assert "instructions.md 要求确认学习深度（问答式）" \
+  grep -q "学习深度" "$root/instructions.md"
 
 echo "== 2. 模板章节要求 =="
 for t in 技术全景 核心概念词典 主题笔记 个人总结 速查表; do
