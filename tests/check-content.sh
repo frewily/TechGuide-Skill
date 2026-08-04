@@ -43,6 +43,8 @@ assert "instructions.md 含对抗遗忘的自我维护原则" \
   grep -q "对抗遗忘" "$root/instructions.md"
 assert "instructions.md 将手段决策权交给调用方 AI" \
   grep -q "自行决策" "$root/instructions.md"
+assert "instructions.md 默认章节结构允许用户调整" \
+  grep -q "默认，可调整" "$root/instructions.md"
 
 echo "== 2. 模板章节要求 =="
 for t in 技术全景 核心概念词典 主题笔记 个人总结 速查表; do
