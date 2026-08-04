@@ -35,12 +35,16 @@ assert "instructions.md 按领域逐个讲解" \
   grep -q "按领域逐个讲解" "$root/instructions.md"
 assert "instructions.md 练习记录分散到各领域章节末尾" \
   grep -q "分散到各领域章节末尾" "$root/instructions.md"
+assert "instructions.md 规定中断恢复流程" \
+  grep -q "学习恢复" "$root/instructions.md"
 
 echo "== 2. 模板章节要求 =="
 for t in 技术全景 核心概念词典 主题笔记 个人总结 速查表; do
   f="$root/assets/templates/$t.md"
   assert "模板 $t.md 存在且含 tech-guide front matter" \
     grep -q "tags: \[tech-guide, learning\]" "$f"
+  assert "模板 $t.md 含 progress 字段" \
+    grep -q "^progress: Phase 1" "$f"
 done
 assert "主题笔记模板含练习记录小节" \
   grep -q "练习记录" "$root/assets/templates/主题笔记.md"
@@ -48,6 +52,9 @@ assert "主题笔记模板按领域分章（## 领域）" \
   grep -q "^## 领域" "$root/assets/templates/主题笔记.md"
 assert "主题笔记模板练习记录在领域章内（### 练习记录）" \
   grep -q "^### 练习记录" "$root/assets/templates/主题笔记.md"
+assert "主题笔记练习记录嵌套在各领域章节内" \
+  awk '/^## /{s=$0} /^### 练习记录/{if (s ~ /^## 领域/) ok=1} END{exit !ok}' \
+  "$root/assets/templates/主题笔记.md"
 assert "核心概念词典模板含所属领域列" \
   grep -q "所属领域" "$root/assets/templates/核心概念词典.md"
 assert "技术全景模板含领域清单" \
@@ -82,6 +89,10 @@ assert_not "拒绝非法主题名: .." "$root/scripts/init-notes.sh" ".."
 assert_not "拒绝非法主题名: a/b（路径穿越）" "$root/scripts/init-notes.sh" "a/b"
 assert "非法主题名不写出 notes/ 之外" \
   test ! -e "$(cd "$tmp/.." && pwd)/x"
+
+echo "== 4. skill.json 合法性 =="
+assert "skill.json 是合法 JSON" \
+  python3 -c "import json; json.load(open('$root/skill.json'))"
 
 echo ""
 if [ "$fail" -eq 0 ]; then
