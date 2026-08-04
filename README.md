@@ -21,7 +21,7 @@
 
 ## 笔记输出位置
 
-调用 `scripts/init-notes.sh <topic-name>` 后，在**调用目录**下生成：
+调用 `scripts/init-notes.sh <topic-name>` 后，在**当前工作目录**下生成（可用 `--out <dir>` 指定输出位置）：
 
 ```text
 notes/<topic-name>/

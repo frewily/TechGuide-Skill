@@ -1,17 +1,28 @@
 #!/usr/bin/env bash
 # TechGuide init-notes.sh
-# 用法: ./init-notes.sh <topic-name>
-# 在调用目录创建 notes/<topic-name>/ 下的 5 份笔记，从本包 assets/templates 复制并替换占位符。
+# 用法: ./init-notes.sh [--out <dir>] <topic-name>
+# 默认在调用目录（当前工作目录）创建 notes/<topic-name>/ 下的 5 份笔记，
+# 也可用 --out <dir> 指定输出目录；从本包 assets/templates 复制并替换占位符。
 # 安全保证: 主题名校验、不覆盖已有笔记、原子写入、兼容 macOS / Linux。
 set -euo pipefail
 
 usage() {
-  echo "用法: $0 <topic-name>" >&2
+  echo "用法: $0 [--out <dir>] <topic-name>" >&2
+  echo "  默认输出到当前工作目录；--out <dir> 指定输出目录" >&2
   echo "  topic-name 仅允许 [A-Za-z0-9._-]，且不能是 . 或 .." >&2
   exit 1
 }
 
-# --- 1. 校验主题名 ---
+# --- 1. 解析参数 ---
+out_dir="$(pwd)"
+if [ "$#" -ge 1 ] && [ "$1" = "--out" ]; then
+  if [ "$#" -lt 3 ]; then
+    usage
+  fi
+  out_dir="$2"
+  shift 2
+fi
+
 if [ "$#" -ne 1 ]; then
   usage
 fi
@@ -39,7 +50,7 @@ if [ ! -d "$templates_dir" ]; then
 fi
 
 # --- 3. 创建输出目录 ---
-notes_dir="$(pwd)/notes/$topic"
+notes_dir="$out_dir/notes/$topic"
 mkdir -p "$notes_dir"
 
 date_str="$(date +%F)"

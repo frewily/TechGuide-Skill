@@ -45,6 +45,12 @@ assert "instructions.md 将手段决策权交给调用方 AI" \
   grep -q "自行决策" "$root/instructions.md"
 assert "instructions.md 默认章节结构允许用户调整" \
   grep -q "默认，可调整" "$root/instructions.md"
+assert "instructions.md 允许 --out 指定笔记输出目录" \
+  grep -q -- "--out" "$root/instructions.md"
+assert "instructions.md 含证据降级路径（未实测标注）" \
+  grep -q "未实测" "$root/instructions.md"
+assert "instructions.md 统一练习记录口径" \
+  grep -q "统一记入" "$root/instructions.md"
 
 echo "== 2. 模板章节要求 =="
 for t in 技术全景 核心概念词典 主题笔记 个人总结 速查表; do
@@ -76,6 +82,8 @@ echo "== 3. init-notes.sh 行为 =="
 cd "$tmp"
 
 assert "合法主题名创建成功" "$root/scripts/init-notes.sh" "test-topic"
+assert "--out 指定输出目录" "$root/scripts/init-notes.sh" "--out" "$tmp/custom" "custom-topic"
+assert "--out 目录下创建笔记" test -f "$tmp/custom/notes/custom-topic/技术全景.md"
 for t in 技术全景 核心概念词典 主题笔记 个人总结 速查表; do
   assert "创建 $t.md" test -f "$tmp/notes/test-topic/$t.md"
 done
